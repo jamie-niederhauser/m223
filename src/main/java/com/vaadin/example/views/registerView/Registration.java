@@ -1,12 +1,10 @@
-package com.vaadin.example.views.addcustomer;
-
+package com.vaadin.example.views.registerView;
 
 import com.vaadin.example.data.entity.Kunde;
 import com.vaadin.example.data.service.KundenService;
 import com.vaadin.example.views.MainView;
 import com.vaadin.example.views.customerlist.CustomerList;
-import com.vaadin.flow.component.ComponentEvent;
-import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.example.views.loginview.Login;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -14,51 +12,38 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.textfield.TextFieldVariant;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
-import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
-import com.vaadin.flow.shared.Registration;
-import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-@PageTitle("Addcustomer")
-@Route(value="Addcustomer", layout = MainView.class)
-@RouteAlias(value = "Addcustomer", layout = MainView.class)
-@RolesAllowed("ADMIN")
-public class AddCustomer extends VerticalLayout {
+@PageTitle("Registrate")
+@Route(value="Registrate")
+@RouteAlias(value = "Registrate")
+@AnonymousAllowed
+public class Registration extends VerticalLayout {
+
     private final KundenService kundenService;
-    Binder<Kunde> binder = new BeanValidationBinder<>(Kunde.class);
     private Kunde kunde;
-
-
-
-    @Autowired
-    public AddCustomer(KundenService kundenService) {
+    public Registration(KundenService kundenService) {
         this.kundenService = kundenService;
 
 
-        H1 title  = new H1("Put name down for queue");
+        H1 title  = new H1("Registrate");
         TextField vorname = new TextField("Name");
         TextField nachname = new TextField("Vorname");
         EmailField email = new EmailField("E-Mail");
         Button cancel = new Button("Cancel");
-        Button create = new Button("Create",(e)->{
+        Button create = new Button("Registrate and back to login",(e)->{
             String svorname = vorname.getValue();
             String snachname = nachname.getValue();
             String semail = email.getValue();
             kunde = new Kunde(svorname,snachname,semail);
             kundenService.addKunde(kunde);
-            UI.getCurrent().navigate(CustomerList.class);
+            UI.getCurrent().navigate(Login.class);
 
         });
 
@@ -78,10 +63,9 @@ public class AddCustomer extends VerticalLayout {
         formLayout.setColspan(email, 2);
         formLayout.setWidth("300px");
         formLayout.setHeight("200px");
-        setHorizontalComponentAlignment(Alignment.CENTER,title,formLayout);
+        setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER,title,formLayout);
 
         add(title , formLayout );
     }
-
 
 }

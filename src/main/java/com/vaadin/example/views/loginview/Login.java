@@ -1,7 +1,10 @@
 package com.vaadin.example.views.loginview;
+import com.vaadin.example.views.customerlist.CustomerList;
+import com.vaadin.example.views.registerView.Registration;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.LoginForm;
-import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -20,10 +23,18 @@ public class Login extends VerticalLayout implements BeforeEnterObserver {
         addClassName("login-view");
         setSizeFull();
 
+        LoginI18n i18n = LoginI18n.createDefault();
+        LoginI18n.Form i18nForm = i18n.getForm();
+        i18nForm.setForgotPassword("Registration");
+        login.setI18n(i18n);
+
+
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
 
         login.setAction("login");
+
+        login.addForgotPasswordListener( e-> UI.getCurrent().navigate(Registration.class));
 
         add(new H1("Ticketverkauf"), login);
     }
@@ -37,4 +48,7 @@ public class Login extends VerticalLayout implements BeforeEnterObserver {
             login.setError(true);
         }
     }
+
+
+
 }

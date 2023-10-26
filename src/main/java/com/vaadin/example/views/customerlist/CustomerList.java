@@ -21,6 +21,7 @@ import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -38,6 +39,7 @@ import java.util.Set;
 public class CustomerList extends VerticalLayout {
 
     private final KundenService kundenService;
+    private Kunde kunde;
     private Grid<Kunde> grid = new Grid<>(Kunde.class, false);
 
     Button add = new Button("Add");
@@ -47,16 +49,28 @@ public class CustomerList extends VerticalLayout {
     public CustomerList(KundenService kundenService) {
         this.kundenService = kundenService;
         setSizeFull();
-
+        configureGrid();
 
         add.addClickListener(e -> UI.getCurrent().navigate(AddCustomer.class));
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         delete.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
+        delete.addClickListener(e-> {
+                    Set<Kunde> selectedItems = grid.getSelectedItems();
+
+                    for (Kunde kunde : selectedItems) {
+                        // Führen Sie die Löschaktion für jede ausgewählte Zeile durch, z.B. mit einem KundenService
+                        kundenService.deleteKunde(kunde.getId());
+                        refreshGrid(grid);
+                    }
+            // Aktualisieren Sie das Grid nach dem Löschen
+
+        });
         HorizontalLayout horizontalLayout = new HorizontalLayout(add, delete);
 
         setHorizontalComponentAlignment(Alignment.END, horizontalLayout);
 
-        configureGrid();
+
+
 
         add(grid, horizontalLayout);
     }
@@ -77,5 +91,12 @@ public class CustomerList extends VerticalLayout {
             Notification.show(((Set<?>) selected).size() + " items selected");
         });
     }
+
+    private void refreshGrid(Grid<Kunde> grid) {
+        List<Kunde> updatedKunden = kundenService.getKunden();
+        grid.setItems(updatedKunden);
+    }
+
+
 
 }

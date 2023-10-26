@@ -32,18 +32,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class MainView  extends AppLayout {
 
-    private SecurityService securityService;
 
     private H2 viewTitle;
 
     public MainView(@Autowired SecurityService securityService) {
         setPrimarySection(Section.DRAWER);
-        this.securityService = securityService;
         addDrawerContent();
-        addHeaderContent();
+        addHeaderContent(securityService);
     }
 
-    private void addHeaderContent() {
+    private void addHeaderContent(@Autowired SecurityService securityService) {
         DrawerToggle toggle = new DrawerToggle();
         toggle.setAriaLabel("Menu toggle");
 

@@ -33,6 +33,26 @@ public class KundenService {
 	/**
 	 * @return All movies in the database, with director information.
 	 */
+
+	public void addKunde(Kunde kunde) {
+
+		final String sql = KundeRowMapper.INSERT_INTO;
+		template.update(
+				sql,
+				kunde.getName(),
+				kunde.getVorname(),
+				kunde.getEmail()
+		);
+
+	}
+
+	public void deleteKunde(Long kundeId) {
+
+		final String sql = KundeRowMapper.DELETE_ALL;
+		template.update(sql, kundeId);
+
+	}
+
 	public List<Kunde> getKunden() {
 
 		// Use a query the sql mapper class understands
@@ -61,6 +81,9 @@ public class KundenService {
 		 * SQL clause to fetch all Movies from the DB, with Director names included.
 		 */
 		public static final String SELECT_ALL = "SELECT * FROM kunde kun";
+		public static final String INSERT_INTO = "INSERT INTO kunde(name,vorname,email) values(?,?,?)";
+
+		public static final String DELETE_ALL = "DELETE FROM kunde WHERE id = ?";
 
 
 
