@@ -61,7 +61,7 @@ public class MainView  extends AppLayout {
     private SideNav createNavigation() {
         SideNav nav = new SideNav();
 
-        nav.addItem(new SideNavItem("Customerlist", CustomerList.class));
+        nav.addItem(new SideNavItem("Que with Customer", CustomerList.class));
         nav.addItem(new SideNavItem("AddCustomer", AddCustomer.class));
 
         return nav;

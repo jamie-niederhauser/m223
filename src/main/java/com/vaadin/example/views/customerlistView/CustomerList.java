@@ -1,5 +1,6 @@
 package com.vaadin.example.views.customerlistView;
 
+import java.util.UUID;
 import com.vaadin.example.data.entity.Kunde;
 import com.vaadin.example.views.MainView;
 import com.vaadin.example.views.addcustomerView.AddCustomer;
@@ -22,7 +23,12 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Set;
@@ -41,6 +47,10 @@ import java.util.Set;
 @AnonymousAllowed
 public class CustomerList extends VerticalLayout {
 
+    UUID uuid = UUID.randomUUID();
+    String uniqueId = uuid.toString();
+
+    private static final Logger log = LoggerFactory.getLogger(CustomerList.class);
     private final KundenService kundenService;
     private Kunde kunde;
     private Grid<Kunde> grid = new Grid<>(Kunde.class, false);
@@ -50,6 +60,7 @@ public class CustomerList extends VerticalLayout {
 
     Button changeMail = new Button("Change your e-mail");
 
+    String allowedUUID = "Ihre_erlaubte_UUID"; // Ersetzen Sie dies durch Ihre gewünschte UUID
 
 
     @Autowired
@@ -100,7 +111,8 @@ public class CustomerList extends VerticalLayout {
         });
 
 
-                HorizontalLayout horizontalLayout = new HorizontalLayout(add, delete,changeMail);
+
+        HorizontalLayout horizontalLayout = new HorizontalLayout(add, delete,changeMail);
 
         setHorizontalComponentAlignment(Alignment.END, horizontalLayout);
 
@@ -119,6 +131,7 @@ public class CustomerList extends VerticalLayout {
         grid.addColumn(Kunde::getName).setHeader("Firstname").setSortable(true).setTextAlign(ColumnTextAlign.CENTER);
         grid.addColumn(Kunde::getVorname).setHeader("Lastname").setSortable(true);
         grid.addColumn(Kunde::getEmail).setHeader("Emails").setSortable(true);
+        grid.addColumn(Kunde::getUid).setHeader("Uid").setSortable(true);
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         grid.setItems(kundenService.getKunden());
         grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);

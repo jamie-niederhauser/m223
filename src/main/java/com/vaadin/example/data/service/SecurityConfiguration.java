@@ -1,7 +1,10 @@
 package com.vaadin.example.data.service;
 
+import com.vaadin.example.data.entity.Account;
+import com.vaadin.example.data.entity.Kunde;
 import com.vaadin.example.views.loginView.Login;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @EnableWebSecurity
 @Configuration
@@ -55,18 +61,19 @@ public class SecurityConfiguration
      * in memory users and their roles.
      * NOTE: This shouldn't be used in real world applications.
      */
-    @Bean
-    public UserDetailsManager userDetailsService() {
-        UserDetails user =
-                User.withUsername("user")
-                        .password("{noop}user")
-                        .roles("USER")
-                        .build();
-        UserDetails admin =
-                User.withUsername("admin")
-                        .password("{noop}admin")
-                        .roles("ADMIN")
-                        .build();
-        return new InMemoryUserDetailsManager(user, admin);
-    }
+   @Bean
+    public UserDetailsManager userDetailsService(@Autowired AccountService accountService) {
+        List<Account> updatedKunden = accountService.getAccount();
+        List<UserDetails> userDetailsList = new ArrayList<>();
+        for (Account account : updatedKunden) {
+            System.out.println(account);
+            UserDetails userDetails = User.withUsername(account.getName())
+                    .password("{noop}" + account.getPasswort())
+                    .roles(account.getRolle())
+                    .build();
+            userDetailsList.add(userDetails);
+        }
+
+        return new InMemoryUserDetailsManager(userDetailsList);
+  }
 }

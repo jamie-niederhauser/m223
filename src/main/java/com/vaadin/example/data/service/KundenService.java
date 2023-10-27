@@ -41,7 +41,8 @@ public class KundenService {
 				sql,
 				kunde.getName(),
 				kunde.getVorname(),
-				kunde.getEmail()
+				kunde.getEmail(),
+				kunde.getUid()
 		);
 
 	}
@@ -90,7 +91,7 @@ public class KundenService {
 		 * SQL clause to fetch all Movies from the DB, with Director names included.
 		 */
 		public static final String SELECT_ALL = "SELECT * FROM kunde kun";
-		public static final String INSERT_INTO = "INSERT INTO kunde(name,vorname,email) values(?,?,?)";
+		public static final String INSERT_INTO = "INSERT INTO kunde(name,vorname,email,uid) values(?,?,?,?)";
 
 		public static final String DELETE_ALL = "DELETE FROM kunde WHERE id = ?";
 
@@ -104,6 +105,7 @@ public class KundenService {
 			kunde.setName(rs.getString("name"));
 			kunde.setVorname(rs.getString("vorname"));
 			kunde.setEmail(rs.getString("email"));
+			kunde.setUid(rs.getString("uid"));
 
 
 

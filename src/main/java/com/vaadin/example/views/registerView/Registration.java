@@ -17,6 +17,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import jakarta.validation.constraints.Null;
+
+import java.util.UUID;
 
 @PageTitle("Registrate")
 @Route(value="Registrate")
@@ -24,6 +27,9 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @AnonymousAllowed
 public class Registration extends VerticalLayout {
 
+
+    UUID uuid = UUID.randomUUID();
+    String uniqueId = uuid.toString();
     private final KundenService kundenService;
     private Kunde kunde;
     public Registration(KundenService kundenService) {
@@ -39,7 +45,7 @@ public class Registration extends VerticalLayout {
             String svorname = vorname.getValue();
             String snachname = nachname.getValue();
             String semail = email.getValue();
-            kunde = new Kunde(svorname,snachname,semail);
+            kunde = new Kunde(svorname,snachname,semail, uniqueId);
             kundenService.addKunde(kunde);
             UI.getCurrent().navigate(Login.class);
 

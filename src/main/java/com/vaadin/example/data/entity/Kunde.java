@@ -1,4 +1,6 @@
 package com.vaadin.example.data.entity;
+import java.util.UUID;
+
 
 public class Kunde {
 
@@ -7,13 +9,18 @@ public class Kunde {
 	private String vorname;
 	private String email;
 
+	private String uid;
+
+
+
 	public Kunde() {
 	}
 
-	public Kunde(String name, String vorname, String email) {
+	public Kunde(String name, String vorname, String email, String uid) {
 		this.name = name;
 		this.vorname = vorname;
 		this.email = email;
+		this.uid = uid;
 
 	}
 
@@ -32,10 +39,14 @@ public class Kunde {
 	public Long getId() {
 		return id;
 	}
+	public String getUid() {
+		return uid;
+	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 
 	public void setName(String name) {
 		this.name = name;
@@ -49,7 +60,9 @@ public class Kunde {
 		this.email = email;
 	}
 
-
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
 
 	@Override
 	public String toString() {

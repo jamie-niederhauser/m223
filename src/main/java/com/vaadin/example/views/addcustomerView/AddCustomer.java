@@ -21,16 +21,20 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.UUID;
+import java.util.UUID;
 
 @PageTitle("Addcustomer")
 @Route(value="Addcustomer", layout = MainView.class)
 @RouteAlias(value = "Addcustomer", layout = MainView.class)
-@RolesAllowed("ADMIN")
+@RolesAllowed("admin")
 public class AddCustomer extends VerticalLayout {
     private final KundenService kundenService;
     Binder<Kunde> binder = new BeanValidationBinder<>(Kunde.class);
     private Kunde kunde;
 
+    UUID uuid = UUID.randomUUID();
+    String uniqueId = uuid.toString();
 
 
     @Autowired
@@ -47,7 +51,7 @@ public class AddCustomer extends VerticalLayout {
             String svorname = vorname.getValue();
             String snachname = nachname.getValue();
             String semail = email.getValue();
-            kunde = new Kunde(svorname,snachname,semail);
+            kunde = new Kunde(svorname,snachname,semail,uniqueId);
             kundenService.addKunde(kunde);
             UI.getCurrent().navigate(CustomerList.class);
 
