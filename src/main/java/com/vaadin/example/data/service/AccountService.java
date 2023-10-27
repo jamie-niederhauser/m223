@@ -18,12 +18,16 @@ public class AccountService {
         /**
          * Access point to our DB, automatically configured by Spring.
          */
-        @Autowired
-        private JdbcTemplate template;
+        private final JdbcTemplate template;
 
         /**
          * @return All movies in the database, with director information.
          */
+
+        public AccountService(JdbcTemplate template) {
+            this.template = template;
+        }
+        
 
         public void addAccount(Account account) {
 
@@ -37,13 +41,6 @@ public class AccountService {
 
         }
 
-
-        public void deleteAccount(Long accountid) {
-
-            final String sql = com.vaadin.example.data.service.KundenService.KundeRowMapper.DELETE_ALL;
-            template.update(sql, accountid);
-
-        }
 
 
         public void updateKundeEmail(long accountid, String newEmail) {
