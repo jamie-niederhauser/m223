@@ -4,6 +4,7 @@ package com.vaadin.example.views;
 
 
 import com.vaadin.example.data.service.SecurityService;
+import com.vaadin.example.views.UserView.User;
 import com.vaadin.example.views.addcustomerView.AddCustomer;
 import com.vaadin.example.views.customerlistView.CustomerList;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -63,6 +64,7 @@ public class MainView  extends AppLayout {
 
         nav.addItem(new SideNavItem("Que with Customer", CustomerList.class));
         nav.addItem(new SideNavItem("AddCustomer", AddCustomer.class));
+        nav.addItem(new SideNavItem("User", User.class));
 
         return nav;
     }

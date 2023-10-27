@@ -27,42 +27,44 @@ public class ApplicationServiceInitListener implements VaadinServiceInitListener
 		// Initializing tables in the database
 
 		// First, remove if already exist
-		initDBStructure();
+	//	initDBStructure();
 		// insert data
-		populateData();
+	//	populateData();
 
 		System.out.println("_________DB initiation has finished____________");
 	}
 
 	private void initDBStructure() {
-	/*	jdbcTemplate.execute("DROP TABLE kunde IF EXISTS ");
+		jdbcTemplate.execute("DROP TABLE kunde IF EXISTS ");
 		jdbcTemplate.execute("DROP TABLE account IF EXISTS ");
 
 
 
 		jdbcTemplate.execute("CREATE TABLE kunde (id IDENTITY NOT NULL PRIMARY KEY, name VARCHAR(255),vorname VARCHAR(255) , email VARCHAR(255), uid VARCHAR(255))");
 		jdbcTemplate.execute("CREATE TABLE account (id IDENTITY NOT NULL PRIMARY KEY, name VARCHAR(255),passwort VARCHAR(255) , rolle VARCHAR(255))");
-	*/}
+
+	}
+
 
 	private void populateData() {
 
-/*
-		jdbcTemplate.update(
-				"INSERT INTO kunde VALUES (DEFAULT, 'Niederhauser','Jamie', 'jamie.niederhauser@fdas.ch','1')");
 
 		jdbcTemplate.update(
-				"INSERT INTO kunde VALUES (DEFAULT, 'Niederhauadsfasdfser','Jamadsfie', 'jamie.niedfaser@fdas.ch','2')");
-		jdbcTemplate.update(
-				"INSERT INTO kunde VALUES (DEFAULT, 'Niederhaudasfaser','Jamiadsfe', 'jamie.hauser@fdas.ch','3')");
+				"INSERT INTO kunde VALUES (DEFAULT, 'Niederhauser','Jamie', 'jamie.niederhauser@fdas.ch','2ad195a4-be9c-4761-bf67-ddbd3df8f088')");
 
 		jdbcTemplate.update(
-				"INSERT INTO kunde VALUES (DEFAULT, 'User','User', 'User.user@gmail.com','4')");
+				"INSERT INTO kunde VALUES (DEFAULT, 'Niederhauadsfasdfser','Jamadsfie', 'jamie.niedfaser@fdas.ch','4ad195a4-be9c-4761-bf67-ddbd3df8f007')");
 		jdbcTemplate.update(
-				"INSERT INTO kunde VALUES (DEFAULT, 'Admin','Admin', 'Admin.admin@gmail.com','5')");
+				"INSERT INTO kunde VALUES (DEFAULT, 'Niederhaudasfaser','Jamiadsfe', 'jamie.hauser@fdas.ch','2ad195a4-be9c-4761-bf67-ddbd3df8f444')");
+
 		jdbcTemplate.update(
-				"INSERT INTO account VALUES (DEFAULT, 'user','user', 'user')");
+				"INSERT INTO kunde VALUES (DEFAULT, 'User','User', 'User.user@gmail.com','2ad195a4-be9c-4761-bf67-ddbd3df8f733')");
 		jdbcTemplate.update(
-				"INSERT INTO account VALUES (DEFAULT, 'admin','admin', 'admin')"); */
+				"INSERT INTO kunde VALUES (DEFAULT, 'Admin','Admin', 'Admin.admin@gmail.com','2ad195a4-be9c-4761-bf67-ddbd3df8f092')");
+		jdbcTemplate.update(
+				"INSERT INTO account VALUES (DEFAULT, 'user','$2a$12$DfQ4CYYo7bDai5hC0B0pzOQ0fyLpGSjbUTPlL.UqgpNmMXP08cqO.', 'user')");
+		jdbcTemplate.update(
+				"INSERT INTO account VALUES (DEFAULT, 'admin','$2a$12$1OH4xyqC4XInHS7quDaGEemm2NpOwOAuL8fu0kRCLs.MY0zn6UMee', 'admin')");
 
 	}
 
