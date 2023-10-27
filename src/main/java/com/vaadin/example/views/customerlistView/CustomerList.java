@@ -1,8 +1,8 @@
-package com.vaadin.example.views.customerlist;
+package com.vaadin.example.views.customerlistView;
 
 import com.vaadin.example.data.entity.Kunde;
 import com.vaadin.example.views.MainView;
-import com.vaadin.example.views.addcustomer.AddCustomer;
+import com.vaadin.example.views.addcustomerView.AddCustomer;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -12,6 +12,9 @@ import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.textfield.TextField;
+
 
 import com.vaadin.example.ApplicationServiceInitListener;
 import com.vaadin.example.data.service.KundenService;
@@ -45,6 +48,10 @@ public class CustomerList extends VerticalLayout {
     Button add = new Button("Add");
     Button delete = new Button("Delete");
 
+    Button changeMail = new Button("Change your e-mail");
+
+
+
     @Autowired
     public CustomerList(KundenService kundenService) {
         this.kundenService = kundenService;
@@ -65,7 +72,35 @@ public class CustomerList extends VerticalLayout {
             // Aktualisieren Sie das Grid nach dem Löschen
 
         });
-        HorizontalLayout horizontalLayout = new HorizontalLayout(add, delete);
+        changeMail.addClickListener(event -> {
+            Set<Kunde> selectedItems = grid.getSelectedItems();
+            if (!selectedItems.isEmpty()) {
+                Kunde selectedKunde = selectedItems.iterator().next();
+
+                Dialog emailEditDialog = new Dialog();
+                TextField emailField = new TextField("Neue E-Mail-Adresse");
+                emailField.setValue(selectedKunde.getEmail());
+
+                Button saveButton = new Button("Speichern");
+                saveButton.addClickListener(saveEvent -> {
+                    String newEmail = emailField.getValue();
+                    selectedKunde.setEmail(newEmail);
+
+                    // Aktualisieren Sie die E-Mail-Adresse in der Datenbank (verwenden Sie Ihre Datenbankmethode)
+                    kundenService.updateKundeEmail(selectedKunde.getId(), newEmail);
+
+                    // Aktualisieren Sie das Grid, um die Änderungen anzuzeigen
+                    grid.getDataProvider().refreshItem(selectedKunde);
+                    emailEditDialog.close();
+                });
+
+                emailEditDialog.add(emailField, saveButton);
+                emailEditDialog.open();
+            }
+        });
+
+
+                HorizontalLayout horizontalLayout = new HorizontalLayout(add, delete,changeMail);
 
         setHorizontalComponentAlignment(Alignment.END, horizontalLayout);
 
@@ -74,6 +109,8 @@ public class CustomerList extends VerticalLayout {
 
         add(grid, horizontalLayout);
     }
+
+
 
     private void configureGrid() {
 

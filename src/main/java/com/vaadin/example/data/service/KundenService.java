@@ -46,12 +46,21 @@ public class KundenService {
 
 	}
 
+
 	public void deleteKunde(Long kundeId) {
 
 		final String sql = KundeRowMapper.DELETE_ALL;
 		template.update(sql, kundeId);
 
 	}
+
+
+	public void updateKundeEmail(long kundeId, String newEmail) {
+		final String updateSql = "UPDATE kunde SET email = ? WHERE id = ?";
+
+		template.update(updateSql, newEmail, kundeId);
+	}
+
 
 	public List<Kunde> getKunden() {
 

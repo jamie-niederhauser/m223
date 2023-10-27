@@ -1,5 +1,4 @@
-package com.vaadin.example.views.loginview;
-import com.vaadin.example.views.customerlist.CustomerList;
+package com.vaadin.example.views.loginView;
 import com.vaadin.example.views.registerView.Registration;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H1;

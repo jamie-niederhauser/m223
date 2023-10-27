@@ -1,6 +1,6 @@
 package com.vaadin.example.data.service;
 
-import com.vaadin.example.views.loginview.Login;
+import com.vaadin.example.views.loginView.Login;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
